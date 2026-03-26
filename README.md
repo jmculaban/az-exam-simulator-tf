@@ -19,7 +19,7 @@ Reusable modules to provision:
 ## Project Layout
 
 ```text
-tf-az-exam-simulator/
+az-exam-simulator-tf/
 ├── provider.tf
 ├── variables.tf
 ├── locals.tf
@@ -72,7 +72,7 @@ db_username = "your-admin-user"
 db_password = "your-strong-password"
 ```
 
-## Deploy The Dev Environment
+## Deploy to the Specific Environment
 
 Run Terraform from `environments/{env}`.
 

@@ -10,5 +10,14 @@ resource "azurerm_postgresql_flexible_server" "db" {
   sku_name  = "B_Standard_B1ms"
   version   = "15"
 
-  public_network_access_enabled = false
+  public_network_access_enabled = var.network_access
+}
+
+resource "azurerm_postgresql_flexible_server_firewall_rule" "public_ip" {
+  for_each = toset(var.allowed_public_ips)
+
+  name                = "allow-${replace(each.value, ".", "-")}"
+  server_id           = azurerm_postgresql_flexible_server.db.id
+  start_ip_address    = each.value
+  end_ip_address      = each.value
 }

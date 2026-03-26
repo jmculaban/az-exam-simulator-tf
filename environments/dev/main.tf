@@ -35,6 +35,8 @@ module "postgres" {
   location        = module.rg.location
   admin_user      = var.db_username
   admin_password  = var.db_password
+  network_access  = true
+  allowed_public_ips = var.postgres_allowed_public_ips
 }
 
 module "monitoring" {

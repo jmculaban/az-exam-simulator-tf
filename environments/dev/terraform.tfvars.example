@@ -13,3 +13,6 @@
 # environment        = "dev"
 # resource_prefix    = "dev-example"
 # example_flag       = true
+# db_username = "postgresadmin"
+# db_password = "replace-with-strong-password"
+# postgres_allowed_public_ips = ["203.0.113.10"]
