@@ -17,5 +17,24 @@ resource "azurerm_linux_web_app" "app" {
   site_config {
     ftps_state          = "Disabled"
     minimum_tls_version = "1.2"
+
+    application_stack {
+      docker_image_name   = var.docker_image_name
+      docker_registry_url = var.docker_registry_url
+    }
+  }
+
+  app_settings = {
+    WEBSITES_PORT = "8080"
+
+    DOCKER_REGISTRY_SERVER_URL      = var.docker_registry_url
+    DOCKER_REGISTRY_SERVER_USERNAME = var.docker_username
+    DOCKER_REGISTRY_SERVER_PASSWORD = var.docker_password
+
+    SPRING_DATASOURCE_URL      = var.db_url
+    SPRING_DATASOURCE_USERNAME = var.db_username
+    SPRING_DATASOURCE_PASSWORD = var.db_password
+
+    SPRING_FLYWAY_ENABLED = "true"
   }
 }

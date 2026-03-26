@@ -13,6 +13,15 @@ module "app_service" {
   app_name  = local.app_name
   rg_name   = module.rg.name
   location  = module.rg.location
+
+  docker_image_name = "${module.acr.login_server}/azexam-backend:v1"
+  docker_registry_url = "https://${module.acr.login_server}"
+  docker_username = module.acr.admin_username
+  docker_password = module.acr.admin_password
+
+  db_url = "jdbc:postgresql://${module.postgres.fqdn}:5432/postgres"
+  db_username = var.db_username
+  db_password = var.db_password
 }
 
 module "frontend" {
@@ -80,4 +89,11 @@ module "storage_pe" {
   resource_id          = module.storage.id
   subresource_names    = ["blob"]
   private_dns_zone_ids = [module.private_dns.blob_zone_id]
+}
+
+module "acr" {
+  source = "../../modules/acr"
+  name   = local.acr_name
+  rg_name = module.rg.name
+  location = module.rg.location
 }
