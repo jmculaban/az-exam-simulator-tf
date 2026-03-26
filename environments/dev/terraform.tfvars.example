@@ -1,0 +1,15 @@
+# Dev environment Terraform variable overrides.
+# 
+# This file is intentionally committed as a documented example/placeholder.
+# Do NOT put real secrets or environment-specific credentials here.
+#
+# To use this file locally:
+#   - Copy it to a non-committed file such as `terraform.tfvars` or
+#     `terraform.dev.tfvars`, and
+#   - Fill in the appropriate values for your environment.
+#
+# Example (uncomment and adjust as needed):
+# project_name       = "example-dev"
+# environment        = "dev"
+# resource_prefix    = "dev-example"
+# example_flag       = true
