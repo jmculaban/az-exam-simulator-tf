@@ -8,18 +8,19 @@ module "rg" {
 }
 
 module "app_service" {
-  source    = "../../modules/app_service"
-  plan_name = local.plan_name
-  app_name  = local.app_name
-  rg_name   = module.rg.name
-  location  = module.rg.location
+  source                = "../../modules/app_service"
+  plan_name             = local.plan_name
+  app_name              = local.app_name
+  rg_name               = module.rg.name
+  location              = module.rg.location
+  app_service_subnet_id = module.network.app_service_subnet_id
 
-  docker_image_name = "${module.acr.login_server}/azexam-backend:v1"
+  docker_image_name   = "azexam-backend:v1"
   docker_registry_url = "https://${module.acr.login_server}"
-  docker_username = module.acr.admin_username
-  docker_password = module.acr.admin_password
+  docker_username     = module.acr.admin_username
+  docker_password     = module.acr.admin_password
 
-  db_url = "jdbc:postgresql://${module.postgres.fqdn}:5432/postgres"
+  db_url      = "jdbc:postgresql://${module.postgres.fqdn}:5432/postgres"
   db_username = var.db_username
   db_password = var.db_password
 }
@@ -44,8 +45,11 @@ module "postgres" {
   location        = module.rg.location
   admin_user      = var.db_username
   admin_password  = var.db_password
-  network_access  = true
+  network_access  = false
   allowed_public_ips = var.postgres_allowed_public_ips
+  subnet_id            = module.network.private_endpoint_subnet_id
+  private_dns_zone_id = module.private_dns.postgres_zone_id
+  postgres_id     = local.postgres_id
 }
 
 module "monitoring" {
@@ -92,8 +96,8 @@ module "storage_pe" {
 }
 
 module "acr" {
-  source = "../../modules/acr"
-  name   = local.acr_name
-  rg_name = module.rg.name
+  source   = "../../modules/acr"
+  name     = local.acr_name
+  rg_name  = module.rg.name
   location = module.rg.location
 }

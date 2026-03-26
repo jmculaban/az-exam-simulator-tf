@@ -27,6 +27,8 @@ resource "azurerm_linux_web_app" "app" {
   app_settings = {
     WEBSITES_PORT = "8080"
 
+    WEBSITE_DNS_SERVER = "168.63.129.16"
+
     DOCKER_REGISTRY_SERVER_URL      = var.docker_registry_url
     DOCKER_REGISTRY_SERVER_USERNAME = var.docker_username
     DOCKER_REGISTRY_SERVER_PASSWORD = var.docker_password
@@ -37,4 +39,9 @@ resource "azurerm_linux_web_app" "app" {
 
     SPRING_FLYWAY_ENABLED = "true"
   }
+}
+
+resource "azurerm_app_service_virtual_network_swift_connection" "vnet_integration" {
+  app_service_id = azurerm_linux_web_app.app.id
+  subnet_id = var.app_service_subnet_id
 }

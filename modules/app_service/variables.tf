@@ -43,3 +43,7 @@ variable "db_password" {
   type      = string
   sensitive = true
 }
+
+variable "app_service_subnet_id" {
+  type = string
+}

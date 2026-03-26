@@ -10,6 +10,7 @@ locals {
   appi_name     = "appi-${local.project}-${local.env}"
   vnet_name     = "vnet-${local.project}-${local.env}"
   acr_name      = "acr${local.project}${local.env}"
+  postgres_id   = "postgresql"
 
   # Storage must be globally unique, lowercase, no dashes
   storage_name  = lower("st${local.project}simulator${local.env}")
